@@ -2,29 +2,34 @@
 #include<stdio.h>
 #include<pthread.h>
 
-void* print_strings(void* args){
-        int i;
-        for(i = 0; i < 10; i++){
-                printf("%s %d TEXT\n", (char*)args, i);
-        }
-        pthread_exit(NULL);
+void* print_strings(void* args)
+{
+  int i;
+  for (i = 0; i < 10; i++)
+  {
+    printf("%s %d TEXT\n", (char*)args, i);
+  }
+  pthread_exit(NULL);
 }
 
-int main(){
-        pthread_t thread;
-        int stat;
-        char* name = "a";
-        stat = pthread_create(&thread, NULL, print_strings, (void*)name);
-        if(stat != 0){
-                perror(NULL);
-                return -1;
-        }
-        int err = pthread_join(thread, NULL);
-        if(err != 0){
-                perror(NULL);
-                return -1;
-        }
-        name = "b";
-        print_strings((void*)name);
-        pthread_exit(NULL);
+int main()
+{
+  pthread_t thread;
+  int stat;
+  char* name = "a";
+  stat = pthread_create(&thread, NULL, print_strings, (void*)name);
+  if (stat != 0)
+  {
+    perror(NULL);
+    return -1;
+  }
+  int err = pthread_join(thread, NULL);
+  if (err != 0)
+  {
+    perror(NULL);
+    return -1;
+  }
+  name = "b";
+  print_strings((void*)name);
+  pthread_exit(NULL);
 }
